@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pursue : Seek
+public class Pursue :Seek
 {
-    float maxPrediction;
-    public override SteeringOutput getSteering()
+    float maxPrediction =1f;
+    protected override Vector3 getTargetPosition()
     {
-        SteeringOutput steeringOutput = new SteeringOutput();
         Vector3 direction = target.transform.position - character.transform.position;
         float distance = direction.magnitude;
         float speed = character.linearVelocity.magnitude;
@@ -20,9 +19,14 @@ public class Pursue : Seek
         {
             prediction = distance / speed;
         }
-        target.transform.position += target.transform.forward * prediction;
-        steeringOutput.linear = direction;
-        steeringOutput.angular = 0;
-        return steeringOutput;
+        Kinematic myMovingTarget = target.GetComponent<Kinematic>();
+        if (myMovingTarget == null)
+        {
+            return base.getTargetPosition();
+        }
+        else
+        {
+        }
+        return (target.transform.position + myMovingTarget.linearVelocity * prediction); ;
     }
 }
