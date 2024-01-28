@@ -24,9 +24,6 @@ public class Pursue :Seek
         {
             return base.getTargetPosition();
         }
-        else
-        {
-        }
         return (target.transform.position + myMovingTarget.linearVelocity * prediction); ;
     }
 }
